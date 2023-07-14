@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Arsha.App.Migrations
 {
     [DbContext(typeof(ArshaDbContext))]
-    [Migration("20230702105017_widthheight")]
-    partial class widthheight
+    [Migration("20230704101158_updateproducttab")]
+    partial class updateproducttab
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace Arsha.App.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -71,11 +71,13 @@ namespace Arsha.App.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ImageHeight")
-                        .HasColumnType("float");
+                    b.Property<string>("ImageHeight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ImageWidth")
-                        .HasColumnType("float");
+                    b.Property<string>("ImageWidth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -96,9 +98,13 @@ namespace Arsha.App.Migrations
 
             modelBuilder.Entity("Arsha.Core.Entities.Product", b =>
                 {
-                    b.HasOne("Arsha.Core.Entities.Category", null)
+                    b.HasOne("Arsha.Core.Entities.Category", "Category")
                         .WithMany("products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Arsha.Core.Entities.Category", b =>

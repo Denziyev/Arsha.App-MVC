@@ -6,6 +6,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Category</th>
                 <th>Image Size</th>
                 <th scope="col">Image</th>
                 <th scope="col">Update</th>
@@ -19,6 +20,7 @@
                     <th scope="row">@item.Id</th>
                     <th>@item.Title</th>
                     <th>@item.Description</th>
+                    <th>@item.Category.Name</th>
                     <th>@item.ImageHeight * @item.ImageWidth</th>
                     <th> <img style="width:70px;height:70px; object-fit:cover" src="~/assets/img/@item.Image">  </th>
                     <td><a asp-controller="product" asp-action="update" asp-route-id="@item.Id"><i class="fas fa-edit text text-primary"></i></a></td>
@@ -28,7 +30,7 @@
         </tbody>
     </table>
     <div>
-        <a asp-controller="product" asp-action="create" style="display: block; text-decoration: none; color: white; width: 100%; height: 100%"> <div style="width:100%; " class="btn btn-outline-success">Create Category </div></a>
+        <a asp-controller="product" asp-action="create" style="display: block; text-decoration: none; color: white; width: 100%; height: 100%"> <div style="width:100%; " class="btn btn-outline-success">Create Product </div></a>
     </div>
 
 </div>

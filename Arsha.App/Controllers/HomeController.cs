@@ -22,7 +22,10 @@ namespace Arsha.App.Controllers
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Categories = await _context.Categories.Where(x => !x.IsDeleted).ToListAsync(),
-                Products = await _context.Products.Where(x => !x.IsDeleted).ToListAsync()
+                Products = await _context.Products.Where(x => !x.IsDeleted).ToListAsync(),
+                Employees = await _context.Employees.Where(x => !x.IsDeleted).Include(x => x.Position).Where(x =>! x.IsDeleted).
+                Include(x => x.SocialNetworks).Where(x => !x.IsDeleted).ToListAsync(),
+                SocialNetworks = await _context.SocialNetworks.Where(x => !x.IsDeleted).ToListAsync()
             };
 
             return View(homeViewModel);

@@ -7,9 +7,25 @@ namespace Arsha.App.Context
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<SocialNetwork> SocialNetworks { get; set; }
         public ArshaDbContext(DbContextOptions<ArshaDbContext> options) : base(options)
         {
 
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Product>(a =>
+        //    {
+        //        a.Property<int>("CategoryId");
+        //        a.HasKey("Id");
+        //    });
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
+
+
     }
 }

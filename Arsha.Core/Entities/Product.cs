@@ -14,13 +14,11 @@ namespace Arsha.Core.Entities
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public double ImageHeight { get; set; }
-        public double ImageWidth { get; set; }
+        public string ImageHeight { get; set; }
+        public string ImageWidth { get; set; }
         public string? Image { get; set; }
-        //[ForeignKey("CategoryId")]
-        //public int CategoryId { get; set; }
-        //public Category? categoryName { get; set; }
-
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
         [NotMapped] 
         public IFormFile? FormFile{ get; set; }
     }

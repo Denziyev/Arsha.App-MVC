@@ -21,13 +21,14 @@ namespace Arsha.App.areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products=_context.Products.Where(x=>!x.IsDeleted).ToList();
+            IEnumerable<Product> products=_context.Products.Include(x=>x.Category).Where(x => !x.IsDeleted).ToList();
             return View(products);
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            ViewBag.Categories = await _context.Categories.Where(x => !x.IsDeleted).ToListAsync();
             return View();
         }
 
@@ -35,13 +36,16 @@ namespace Arsha.App.areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
+            ViewBag.Categories = await _context.Categories.Where(x => !x.IsDeleted).ToListAsync();
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+            
             product.Image = product.FormFile.createimage(_env.WebRootPath, "assets/img/");
             product.CreatedDate= DateTime.Now;
+           
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -76,7 +80,7 @@ namespace Arsha.App.areas.Admin.Controllers
             product.UpdatedDate = DateTime.Now;
             product.ImageHeight= postproduct.ImageHeight;
             product.ImageWidth= postproduct.ImageWidth;
-            product.Image = postproduct.FormFile.createimage(_env.WebRootPath, "assets/img/");
+            product.Image = postproduct.FormFile?.createimage(_env.WebRootPath, "assets/img/");
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
